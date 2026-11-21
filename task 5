@@ -1,0 +1,30 @@
+#task5
+import os
+
+seen = set()
+events = {}
+count = 0
+
+files = ["input1.txt", "input2.txt"]
+
+os.makedirs("output", exist_ok=True)
+
+with open("output/master.txt", "w") as master, \
+     open("output/error.txt", "w") as error:
+
+    for file in files:
+        try:
+            with open(file, "r") as f:
+                for line_no, line in enumerate(f, 1):
+                    try:
+                        parts = line.strip().split(",")
+
+                        if len(parts) != 5:
+                            raise ValueError("Invalid data")
+
+                        reg, name, dept, email, choices = parts
+
+                        if reg in seen:
+                            raise ValueError("Duplicate registration")
+
+                        seen.add(reg)
