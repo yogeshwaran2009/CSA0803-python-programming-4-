@@ -1,0 +1,45 @@
+#task2
+attendance = {}
+
+files = ["day1.txt"]
+
+for file in files:
+    try:
+        f = open(file, "r")
+
+        for line in f:
+            parts = line.strip().split(",")
+
+            if len(parts) != 3:
+                print("Invalid line")
+                continue
+
+            reg = parts[0]
+            status = parts[2]
+
+            if reg not in attendance:
+                attendance[reg] = [0, 0]
+
+            attendance[reg][0] += 1
+
+            if status == "P":
+                attendance[reg][1] += 1
+
+        f.close()
+
+    except FileNotFoundError:
+        print("File missing")
+
+print("Attendance Report")
+
+for reg in attendance:
+    total = attendance[reg][0]
+    present = attendance[reg][1]
+    percentage = (present / total) * 100
+
+    print(reg, round(percentage, 2), "%")
+
+    if percentage < 75:
+        print(reg, "Below 75%")
+
+print("Report created")
