@@ -1,0 +1,20 @@
+#task1
+def process_file():
+    total = 0
+    rejected = []
+
+    with open("bill.txt", "r") as f:
+        for n, line in enumerate(f, 1):
+            try:
+                parts = line.strip().split(",")
+                amount = float(parts[2])
+                total += amount
+                print(parts[1], amount)
+
+            except:
+                rejected.append(n)
+
+    print("Total:", total)
+    print("Rejected lines:", rejected)
+
+process_file()
