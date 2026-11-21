@@ -1,0 +1,38 @@
+#task3
+class InvalidRecord(Exception):
+    pass
+
+def parse_line(line):
+    parts = line.strip().split(",")
+
+    if len(parts) != 3:
+        raise InvalidRecord("Invalid number of fields")
+
+    if parts[2] not in ["P", "A"]:
+        raise InvalidRecord("Invalid attendance status")
+
+    return parts
+
+def summarise(filename):
+    present = 0
+    absent = 0
+
+    try:
+        with open(filename, "r") as f:
+            for line_no, line in enumerate(f, 1):
+                try:
+                    reg, date, status = parse_line(line)
+
+                    if status == "P":
+                        present += 1
+                    else:
+                        absent += 1
+
+                except InvalidRecord as e:
+                    print("Error in line", line_no, ":", e)
+
+    except FileNotFoundError:
+        print("File missing")
+
+    print("Present:", present)
+    print("Absent:", absent)
