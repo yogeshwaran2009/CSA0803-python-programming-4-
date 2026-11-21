@@ -1,0 +1,28 @@
+#task4
+def save_returns(books):
+    with open("returns.log", "a") as log:
+        for book in books:
+            log.write(book + "\n")
+
+
+def process(day_file):
+    try:
+        with open(day_file, "r") as f:
+            books = f.readlines()
+
+        save_returns(books)
+        print("Saved successfully")
+
+    except FileNotFoundError:
+        print("File missing")
+
+    except PermissionError:
+        print("Permission denied")
+
+    except OSError as e:
+        print("File error:", e)
+
+
+process("day1.txt")
+process("day2.txt")
+process("day3.txt")
